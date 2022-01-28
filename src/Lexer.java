@@ -41,12 +41,38 @@ public class Lexer {
             case '-': addToken(TokenType.MINUS); break;
             case '*': addToken(TokenType.STAR); break;
             case ';': addToken(TokenType.SEMICOLON); break;
-            case '.': addToken(TokenType.DOT); break;
+            case '.':
+                addToken(isNextCharacter('.') ? TokenType.SPREAD : TokenType.DOT);
+                break;
+            // We need to know whether we have just ':' or ':='
+            case ':': 
+                addToken(isNextCharacter('=') ? TokenType.ASSIGN : TokenType.COLON);
+                break;
+            case '"':
+                // It's always a string, but we must make sure it has closing quote too, else it's an error.
+                boolean foundClosingQuote = false;
+                while(peekNextCharacter() != '\0' && !isAtEnd()) {
+                    if(peekNextCharacter() == '"')  {
+                        foundClosingQuote = true;
+                        addToken(TokenType.STRING_LIT);
+                        break;
+                    }
+                    getNextCharacter();
+                }
+                // If we found a closing quote, break out of switch, otherwise fall through to error
+                if(foundClosingQuote) break;
+                // otherwise its a string
+            default: CompilerMain.error(lineNumber, "Unexpected token");
         }
     }
 
     private char getNextCharacter() {
         return source.charAt(this.currentPosition++);
+    }
+
+    private char peekNextCharacter() {
+        if(isAtEnd()) return '\0';
+        return source.charAt(this.currentPosition);
     }
 
     private void addToken(TokenType tokenType) {
@@ -56,5 +82,13 @@ public class Lexer {
     private void addToken(TokenType tokenType, Object literal) {
         String text = this.source.substring(this.startPosition, this.currentPosition);
         this.tokens.add(new Token(tokenType, text, literal, this.lineNumber));
+    }
+
+    private boolean isNextCharacter(char character) {
+        if(isAtEnd()) return false;
+        if(this.source.charAt(this.currentPosition) != character) return false;
+
+        this.currentPosition++;
+        return true;
     }
 }
