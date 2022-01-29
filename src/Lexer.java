@@ -104,12 +104,8 @@ public class Lexer {
             addToken(keywords.get(this.source.substring(this.startPosition, this.currentPosition)));
             return;
         }
-        // NULL => not a keyword, error. Needs to be able to detect identifiers too!
-        CompilerMain.error(
-            this.lineNumber, "Unknown keyword: " +
-            this.source.substring(this.startPosition, this.currentPosition)
-        );
-        // Token returned -> addToken
+        // NULL => not a keyword, it's an identifier (or syntax error).
+        addToken(TokenType.IDENTIFIER);
     }
 
     private void handleStringLiteral() {
