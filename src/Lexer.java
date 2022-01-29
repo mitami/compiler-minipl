@@ -54,6 +54,7 @@ public class Lexer {
                 while(peekNextCharacter() != '\0' && !isAtEnd()) {
                     if(peekNextCharacter() == '"')  {
                         foundClosingQuote = true;
+                        getNextCharacter();
                         addToken(TokenType.STRING_LIT);
                         break;
                     }
@@ -62,7 +63,7 @@ public class Lexer {
                 // If we found a closing quote, break out of switch, otherwise fall through to error
                 if(foundClosingQuote) break;
                 // otherwise its a string
-            default: CompilerMain.error(lineNumber, "Unexpected token");
+            default: CompilerMain.error(lineNumber, "Unexpected token: " + currentCharacter);
         }
     }
 
