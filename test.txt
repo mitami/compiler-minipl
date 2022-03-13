@@ -1,3 +1,7 @@
 23 + 4;
 print "this should be printed";
 print 25 + 25 + 50;
+
+var first := 1;
+var second := 2;
+print first + second;

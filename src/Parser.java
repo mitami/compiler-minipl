@@ -15,6 +15,16 @@ public class Parser {
         return equality();
     }
 
+    private Statement declaration() {
+        try {
+            if(match(TokenType.VAR)) return variableDeclaration();
+            return statement();
+        } catch (ParseError error) {
+            synchronize();
+            return null;
+        }
+    }
+
     private Statement statement() {
         if(match(TokenType.PRINT)) return printStatement();
 
@@ -31,6 +41,21 @@ public class Parser {
         Expression expression = expression();
         consume(TokenType.SEMICOLON, "Expect ';' after expression.");
         return new Statement.ExpressionStatement(expression);
+    }
+
+    private Statement variableDeclaration() {
+        Token name = consume(TokenType.IDENTIFIER, "Expect variable name.");
+
+        Expression initializer = null;
+        // This actually omits the type definition for now and looks straight
+        // for the ASSIGN operator to detect variable declarations.
+        // TODO: add types
+        if(match(TokenType.ASSIGN)) {
+            initializer = expression();
+        }
+
+        consume(TokenType.SEMICOLON, "Expect ';' after variable declaration.");
+        return new Statement.VariableStatement(name, initializer);
     }
 
     private Expression equality() {
@@ -97,6 +122,10 @@ public class Parser {
         // if(match(TokenType.FALSE)) return new Expression.Literal(null);
 
         if(match(TokenType.NUMBER, TokenType.STRING_LIT)) return new Expression.Literal(previous().literal);
+
+        if(match(TokenType.IDENTIFIER)) {
+            return new Expression.Variable(previous());
+        }
 
         if(match(TokenType.LEFT_PAREN)) {
             Expression expression = expression();
@@ -182,7 +211,7 @@ public class Parser {
     public List<Statement> parseTokens() {
         List<Statement> statements = new ArrayList<>();
         while(!isAtEnd()) {
-            statements.add(statement());
+            statements.add(declaration());
         }
 
         return statements;

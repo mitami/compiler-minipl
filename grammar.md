@@ -83,7 +83,7 @@ factor         → unary ( ( "/" | "*" ) unary )* ;
 unary          → ( "!" | "-" ) unary
                | primary ;
 primary        → NUMBER | STRING | "true" | "false" | "null"
-               | "(" expression ")" ;
+               | "(" expression ")" | IDENTIFIER ;
 
 
 Grammar to enable statements:
@@ -96,3 +96,16 @@ statement -> expressionStatement ;
 expressionStatement -> expression ";" ;
 
 printStatement -> "print" expression ";" ;
+
+
+Grammar to enable name declarations:
+
+program -> declaration* EOF ;
+
+declaration -> variableDeclaration ;
+            -> statement ;
+
+statement -> expressionStatement ;
+          -> printStatement ;
+
+variableDeclaration -> "var" IDENTIFIER ( ":=" expression)? ";" ;

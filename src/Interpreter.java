@@ -2,6 +2,8 @@ import java.util.List;
 
 public class Interpreter implements Expression.Visitor<Object>, Statement.Visitor<Void> {
 
+    private Environment environment = new Environment();
+
     public void interpretExpression(List<Statement> statements) {
         try {
             for(Statement statement : statements) {
@@ -138,5 +140,21 @@ public class Interpreter implements Expression.Visitor<Object>, Statement.Visito
         Object value = evaluate(statement.expression);
         System.out.println(stringify(value));
         return null;
+    }
+
+    @Override
+    public Void visitVariableStatement(Statement.VariableStatement statement) {
+        Object value = null;
+        if(statement.initializer != null) {
+            value = evaluate(statement.initializer);
+        }
+
+        environment.define(statement.name.lexeme, value);
+        return null;
+    }
+
+    @Override
+    public Object visitVariableExpression(Expression.Variable expression) {
+        return environment.get(expression.name);
     }
 }

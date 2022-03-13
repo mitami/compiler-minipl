@@ -39,4 +39,10 @@ public class AstPrinter implements Expression.Visitor<String> {
     @Override
     public String visitGroupingExpression(Expression.Grouping expression) {
         return parenthesize("group", expression.expression);
+    }
+
+    @Override
+    public String visitVariableExpression(Expression.Variable expression) {
+        // TODO Auto-generated method stub
+        return null;
     }}
