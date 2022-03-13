@@ -64,8 +64,20 @@ public class Lexer {
             case '*': addToken(TokenType.STAR); break;
             case '/': addToken(TokenType.SLASH); break;
             case ';': addToken(TokenType.SEMICOLON); break;
+            case '!': addToken(TokenType.NOT); break;
+            case '>': addToken(TokenType.GREATER); break;
+            case '<': addToken(TokenType.LESS); break;
+            case '&': addToken(TokenType.AND); break;
+            case '|': addToken(TokenType.OR); break;
             case '.':
-                addToken(isNextCharacter('.') ? TokenType.SPREAD : TokenType.DOT);
+                // addToken(isNextCharacter('.') ? TokenType.SPREAD : TokenType.DOT);
+                // Since MiniPL does not have token '.' we only check if it is
+                // "..", and if it is not, we raise an error.
+                if(isNextCharacter('.')) {
+                    addToken(TokenType.SPREAD);
+                } else {
+                    CompilerMain.error(lineNumber, "Unexpected token: " + currentCharacter);
+                }
                 break;
             // We need to know whether we have just ':' or ':='
             case ':': 
@@ -91,7 +103,7 @@ public class Lexer {
         while(this.isNumber(this.peekNextCharacter()) && peekNextCharacter() != '\0' && !isAtEnd()) {
             getNextCharacter();
         }
-        addToken(TokenType.NUMBER);
+        addToken(TokenType.NUMBER, Double.parseDouble(source.substring(this.startPosition, this.currentPosition)));
     }
 
     private void handleReservedKeyword() {
@@ -115,7 +127,8 @@ public class Lexer {
             if(peekNextCharacter() == '"')  {
                 foundClosingQuote = true;
                 getNextCharacter();
-                addToken(TokenType.STRING_LIT);
+                String value = source.substring(this.startPosition + 1, this.currentPosition - 1);
+                addToken(TokenType.STRING_LIT, value);
                 break;
             }
             if(peekNextCharacter() == '\n') this.lineNumber++;

@@ -4,7 +4,10 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class CompilerMain {
+    private static final Interpreter interpreter = new Interpreter();
+
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
     public static void main(String[] args) {
         System.out.println("This will become a compiler.");
 
@@ -17,9 +20,16 @@ public class CompilerMain {
                     Lexer lexer = new Lexer(new String(fileAsBytes, Charset.defaultCharset()));
                     List<Token> tokens = lexer.scanFileForTokens();
 
+                    Parser parser = new Parser(tokens);
+                    Expression expression = parser.parseTokens();
+
+                    if(hadError) return;
                     for (Token token : tokens) {
                         System.out.println(token);
                     }
+                    System.out.println(new AstPrinter().print(expression));
+
+                    interpreter.interpretExpression(expression);
                 } catch (Exception e) {
                     System.out.println("Unable to read file: " + args[0]);
                 }
@@ -35,5 +45,18 @@ public class CompilerMain {
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error " + where + ": " + message);
         hadError = true;
+    }
+
+    static void error(Token token, String message) {
+        if(token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
+    }
+
+    static void runtimeError(RuntimeError error) {
+        System.err.println(error.getMessage() + "\n[line " + error.token.line + "]");
+        hadRuntimeError = true;
     }
 }

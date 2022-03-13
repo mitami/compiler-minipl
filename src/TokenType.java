@@ -6,7 +6,7 @@ enum TokenType {
     MINUS, PLUS, STAR, SLASH,
 
     // Logical operators
-    EQUAL, GREATER, LESS, OR, AND,
+    EQUAL, GREATER, LESS, OR, AND, NOT,
 
     // Literal values (strings, integers and booleans)
     STRING_LIT, NUMBER, FALSE, TRUE,
