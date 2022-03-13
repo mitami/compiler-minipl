@@ -1,3 +1,11 @@
+## How to run it:
+
+There should be a 'compilers.jar' -file at the root of the ZIP, next to the 
+'doc' and 'src' folders.
+Run it with `java -jar compilers.jar "path-to-file-containing-input"`
+
+For example, inside the extracted ZIP: `java -jar compilers.jar ./doc/test.txt`
+
 ## MiniPL token patterns as regex / regdef
 
 The tokens are identified using a switch statement, with kind of a variable

@@ -13,9 +13,9 @@ public class CompilerMain {
 
         if(args.length > 1) {
             System.out.println("Only one argument should be given.");
-        } else {//if(args.length == 1) {
+        } else if(args.length == 1) {
                 try {
-                    byte[] fileAsBytes = Files.readAllBytes(Paths.get("test.txt")); //args[0]));
+                    byte[] fileAsBytes = Files.readAllBytes(Paths.get(args[0])); //Paths.get("../doc/test.txt"));
 
                     Lexer lexer = new Lexer(new String(fileAsBytes, Charset.defaultCharset()));
                     List<Token> tokens = lexer.scanFileForTokens();
@@ -33,9 +33,9 @@ public class CompilerMain {
                 } catch (Exception e) {
                     System.out.println("Unable to read file: " + args[0]);
                 }
-        } // else {
-            //System.out.println("Give a filepath as an argument.");
-        // }
+        } else {
+            System.out.println("Give a filepath as an argument.");
+        }
     }
 
     static void error(int line, String message) {
