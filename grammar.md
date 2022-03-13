@@ -84,3 +84,15 @@ unary          → ( "!" | "-" ) unary
                | primary ;
 primary        → NUMBER | STRING | "true" | "false" | "null"
                | "(" expression ")" ;
+
+
+Grammar to enable statements:
+
+program -> statement* EOF ;
+
+statement -> expressionStatement ;
+          -> printStatement ;
+
+expressionStatement -> expression ";" ;
+
+printStatement -> "print" expression ";" ;

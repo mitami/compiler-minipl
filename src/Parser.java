@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
@@ -12,6 +13,24 @@ public class Parser {
 
     private Expression expression() {
         return equality();
+    }
+
+    private Statement statement() {
+        if(match(TokenType.PRINT)) return printStatement();
+
+        return expressionStatement();
+    }
+
+    private Statement printStatement() {
+        Expression value = expression();
+        consume(TokenType.SEMICOLON, "Expect ';' after value.");
+        return new Statement.PrintStatement(value);
+    }
+
+    private Statement expressionStatement() {
+        Expression expression = expression();
+        consume(TokenType.SEMICOLON, "Expect ';' after expression.");
+        return new Statement.ExpressionStatement(expression);
     }
 
     private Expression equality() {
@@ -160,11 +179,18 @@ public class Parser {
 
 
     // Take in an array of TOKENS, and create a tree structure
-    public Expression parseTokens() {
-        try {
-            return expression();
-        } catch (ParseError error) {
-            return null;
+    public List<Statement> parseTokens() {
+        List<Statement> statements = new ArrayList<>();
+        while(!isAtEnd()) {
+            statements.add(statement());
         }
+
+        return statements;
+
+        // try {
+        //     return expression();
+        // } catch (ParseError error) {
+        //     return null;
+        // }
     }
 }

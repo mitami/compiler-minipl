@@ -21,15 +21,15 @@ public class CompilerMain {
                     List<Token> tokens = lexer.scanFileForTokens();
 
                     Parser parser = new Parser(tokens);
-                    Expression expression = parser.parseTokens();
+                    List<Statement> statements = parser.parseTokens();
 
                     if(hadError) return;
                     for (Token token : tokens) {
                         System.out.println(token);
                     }
-                    System.out.println(new AstPrinter().print(expression));
+                    // System.out.println(new AstPrinter().print(expression));
 
-                    interpreter.interpretExpression(expression);
+                    interpreter.interpretExpression(statements);
                 } catch (Exception e) {
                     System.out.println("Unable to read file: " + args[0]);
                 }

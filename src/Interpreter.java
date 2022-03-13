@@ -1,12 +1,21 @@
-public class Interpreter implements Expression.Visitor<Object> {
+import java.util.List;
 
-    public void interpretExpression(Expression expression) {
+public class Interpreter implements Expression.Visitor<Object>, Statement.Visitor<Void> {
+
+    public void interpretExpression(List<Statement> statements) {
         try {
-            Object value = evaluate(expression);
-            System.out.println(stringify(value));
+            for(Statement statement : statements) {
+                execute(statement);
+            }
         } catch (RuntimeError error) {
             CompilerMain.runtimeError(error);
         }
+        // try {
+        //     Object value = evaluate(expression);
+        //     System.out.println(stringify(value));
+        // } catch (RuntimeError error) {
+        //     CompilerMain.runtimeError(error);
+        // }
     }
     
     @Override
@@ -100,6 +109,10 @@ public class Interpreter implements Expression.Visitor<Object> {
         return expression.accept(this);
     }
 
+    private void execute(Statement statement) {
+        statement.accept(this);
+    }
+
     private String stringify(Object object) {
         if(object == null) return "null";
 
@@ -112,5 +125,18 @@ public class Interpreter implements Expression.Visitor<Object> {
         }
 
         return object.toString();
+    }
+
+    @Override
+    public Void visitExpressionStatement(Statement.ExpressionStatement statement) {
+        evaluate(statement.expression);
+        return null;
+    }
+
+    @Override
+    public Void visitPrintStatement(Statement.PrintStatement statement) {
+        Object value = evaluate(statement.expression);
+        System.out.println(stringify(value));
+        return null;
     }
 }
