@@ -45,4 +45,10 @@ public class AstPrinter implements Expression.Visitor<String> {
     public String visitVariableExpression(Expression.Variable expression) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public String visitAssignExpression(Expression.Assign expression) {
+        // TODO Auto-generated method stub
+        return null;
     }}

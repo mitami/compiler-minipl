@@ -9,7 +9,7 @@ public class CompilerMain {
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
     public static void main(String[] args) {
-        System.out.println("This will become a compiler.");
+        System.out.println("Interpreter started.");
 
         if(args.length > 1) {
             System.out.println("Only one argument should be given.");

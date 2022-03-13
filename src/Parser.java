@@ -12,7 +12,7 @@ public class Parser {
     }
 
     private Expression expression() {
-        return equality();
+        return assignment();
     }
 
     private Statement declaration() {
@@ -41,6 +41,24 @@ public class Parser {
         Expression expression = expression();
         consume(TokenType.SEMICOLON, "Expect ';' after expression.");
         return new Statement.ExpressionStatement(expression);
+    }
+
+    private Expression assignment() {
+        Expression expression = equality();
+
+        if(match(TokenType.ASSIGN)) {
+            Token equals = previous();
+            Expression value = assignment();
+
+            if(expression instanceof Expression.Variable) {
+                Token name = ((Expression.Variable)expression).name;
+                return new Expression.Assign(name, value);
+            }
+
+            error(equals, "Invalid assignment target.");
+        }
+
+        return expression;
     }
 
     private Statement variableDeclaration() {

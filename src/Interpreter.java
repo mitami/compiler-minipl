@@ -157,4 +157,11 @@ public class Interpreter implements Expression.Visitor<Object>, Statement.Visito
     public Object visitVariableExpression(Expression.Variable expression) {
         return environment.get(expression.name);
     }
+
+    @Override
+    public Object visitAssignExpression(Expression.Assign expression) {
+        Object value = evaluate(expression.value);
+        environment.assign(expression.name, value);
+        return value;
+    }
 }

@@ -5,3 +5,5 @@ print 25 + 25 + 50;
 var first := 1;
 var second := 2;
 print first + second;
+first := 5;
+print first + second;

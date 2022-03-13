@@ -109,3 +109,10 @@ statement -> expressionStatement ;
           -> printStatement ;
 
 variableDeclaration -> "var" IDENTIFIER ( ":=" expression)? ";" ;
+
+
+Assignment:
+
+expression -> assignment
+assignment -> IDENTIFIER ":=" assignment
+           -> equality

@@ -84,6 +84,8 @@ corresponding regex given.
 
 ## A modified context-free grammar suitable for recursive-descent parsing (eliminating any LL(1) violations); modifications must not affect the language that is accepted.
 
+There are some grammar rules sketched in the 'grammar.txt' -file.
+
 ----------
 
 ## abstract syntax trees (AST), i.e., the internal representation for Mini-PL programs alternatively give a syntax-based definition of the abstract syntax

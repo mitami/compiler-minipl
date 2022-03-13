@@ -1,16 +1,3 @@
-print "This is MiniPL";
-print 345;
-var first : int := 45;
-var second : int := 5902;
-var sum : int := 45 + 5902;
-var sumAgain : int := first + second;
-
-var .2.2 : something :== nonexistent
-var i : int := 0;
-for i in 0..5 do
-  int := int + 1;
-end for
-
 var X : int := 4 + (6 * 2);
 print X;
 
