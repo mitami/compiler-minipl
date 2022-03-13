@@ -131,17 +131,17 @@ number.
 
 --------------
 
-## work hour log in the documentation. For each day you are working on the project, the log should include: (1) date, (2) working time (in hours), (3) the description of the work done. And finally, the total hours spent on the project during the project course
+## Work log
 
-### Work log
+| Date       | Time          | Work hours | Description                                                                                                                                                                            |
+| ---------- | ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| xx.01.2022 | xx:xx - xx:xx | ~10h       | Placeholder for work done on January (Scanner/Lexer impl)                                                                                                                              |
+| xx.02.2022 | xx:xx - xx:xx | ~10h       | Placeholder for work done on February (Scanner/Lexer impl)                                                                                                                             |
+| 11.03.2022 | 11:00 - 15:00 | ~4h        | Started writing documentation and building this work log                                                                                                                               |
+| 12.03.2022 | 12:00 - 18:xx | ~5h        | Fixed bug in Lexer, add error handling documentation for Lexer, add expressions                                                                                                        |
+| 13.03.2022 | 11:40 - xx:xx |            | The Parser and Interpreter parts are working. They can do basic arithmetic, print literals or variables, variables can be defined by the user, variables can be reassigned by the user |
 
-| Date       | Time          | Work hours | Description                                                                     |
-| ---------- | ------------- | ---------- | ------------------------------------------------------------------------------- |
-| xx.01.2022 | xx:xx - xx:xx | ~10h       | Placeholder for work done on January (Scanner/Lexer impl)                       |
-| xx.02.2022 | xx:xx - xx:xx | ~10h       | Placeholder for work done on February (Scanner/Lexer impl)                      |
-| 11.03.2022 | 11:00 - 15:00 | ~4h        | Started writing documentation and building this work log                        |
-| 12.03.2022 | 12:00 - 18:xx | ~5h        | Fixed bug in Lexer, add error handling documentation for Lexer, add expressions |
-| 13.03.2022 | 11:40 - xx:xx |            |                                                                                 |
+-------------
 
 ## Testing
 
@@ -151,12 +151,21 @@ The Lexer print outs each token and it's value.
 
 Contents of text.txt:
 
-    print "This is MiniPL";
-    print 345;
-    var first : int := 45;
-    var second : int := 5902;
-    var sum : int := 45 + 5902;
-    var sumAgain : int := first + second;
+    23 + 4;
+    print "this should be printed";
+    print 25 + 25 + 50;
+
+    var first := 1;
+    var second := 2;
+    print first + second;
+    first := 5;
+    print first + second;
+
+----------
+
+## Missing features
+
+I did not implement the type system, as I ran out of time.
 
 
 
