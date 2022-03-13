@@ -139,7 +139,7 @@ number.
 | xx.02.2022 | xx:xx - xx:xx | ~10h       | Placeholder for work done on February (Scanner/Lexer impl)                                                                                                                             |
 | 11.03.2022 | 11:00 - 15:00 | ~4h        | Started writing documentation and building this work log                                                                                                                               |
 | 12.03.2022 | 12:00 - 18:xx | ~5h        | Fixed bug in Lexer, add error handling documentation for Lexer, add expressions                                                                                                        |
-| 13.03.2022 | 11:40 - xx:xx |            | The Parser and Interpreter parts are working. They can do basic arithmetic, print literals or variables, variables can be defined by the user, variables can be reassigned by the user |
+| 13.03.2022 | 11:40 - xx:xx | ~7h        | The Parser and Interpreter parts are working. They can do basic arithmetic, print literals or variables, variables can be defined by the user, variables can be reassigned by the user |
 
 -------------
 
@@ -165,9 +165,5 @@ Contents of text.txt:
 
 ## Missing features
 
-I did not implement the type system, as I ran out of time.
-
-
-
-For completeness, include the original project definition and the Mini-PL specification as
-appendices of your document; you can refer to them when explaining your solutions. 
+I did not implement the type system, or the control structures, such as loops as
+I ran out of time.
